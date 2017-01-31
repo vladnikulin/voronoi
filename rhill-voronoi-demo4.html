@@ -1,0 +1,49 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ячейки Вороного + Яндекс карты</title>
+    <meta name="Keywords" lang="en" content="voronoi, fortune, javascript, raymond hill" />
+    <!--[if lte IE 8]><script type="text/javascript" src="excanvas/excanvas.compiled.js"></script><![endif]-->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+    <script type="text/javascript" src="rhill-voronoi-core.min.js"></script>
+    <script type="text/javascript" src="QuadTree.js"></script>
+    <script type="text/javascript" src="voronoicreate.js"></script>
+    <!--<script type="text/javascript" src="../js/bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+        crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>  
+    <div id="divroot" style="width:800px;">
+        <h4 class="divhdr">Ячейки Вороного</h4>
+        <div class="divinfo" id="voronoiGenerator">
+            <button id="lock" type="button" class="btn-primary" onclick="marksLock()">Режим добавления</button>
+            <button id="show" type="button" class="btn-primary" onclick="VoronoiDemo.init();VoronoiDemo.render();showCanvas();">Показать</button>
+            <br/>
+        </div>
+        <h4 class="divhdr">Область отрисовки
+            <span id="voronoiStats" style="font:normal 11px sans"></span>
+            <span style="font:normal 11px sans"> / Cell id at <span id="voronoiCellid" style="font:normal 11px sans"></span>
+            </span>
+        </h4>
+        <div id="canvasParent">
+            <noscript>You need to enable Javascript in your browser for this page to display properly.</noscript>
+            <canvas id="voronoiCanvas" width="800" height="600" onmousemove="VoronoiDemo.cellUnderMouse(event);"></canvas>
+            <div id="map" width="800" height="600" "></div>
+            <button type="button " class="btn-warning btn-sm" onclick="location.reload()">Очистить</button>
+            <table class="table" id="table_marks">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Широта</th>
+                        <th>Долгота</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+<script src="app.js"></script>
+</body>
+</html>
