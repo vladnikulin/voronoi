@@ -80,6 +80,12 @@ function init() {
 
     // Слушаем клик на карте.
     myMap.events.add('click', function (e) {
+        
+        //console.log(e);
+        //temp2._sourceEvent._cache.clientPixels 
+        // [798, 239]
+
+
         var coords = e.get('coords');
         myPlacemark = createPlacemark(coords, false);
         console.log(myPlacemark);
@@ -96,6 +102,19 @@ function init() {
             myPlacemark = createPlacemark(test[i], true);
             myMap.geoObjects.add(myPlacemark);
             getAddress(myPlacemark.geometry.getCoordinates());
+
+            console.log(myPlacemark);
+
+            // ---- LOADING TEST DATA ----
+            // need to activate click event or canvas wont see point
+            // (function(){
+            //     var my_point = JSON.parse(JSON.stringify(myPlacemark.geometry._map.container._offset));
+            //     xCoords.push(my_point[0]); // ERROR - coordinates doesnt match
+            //     yCoords.push(my_point[1]); // ERROR - coordinates doesnt match
+            //     console.log(myPlacemark);
+            // })();
+            
+
         }
     });
 }
