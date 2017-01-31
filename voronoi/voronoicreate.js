@@ -40,16 +40,15 @@ document.onmousemove = function(e)
 }
 
 window.onload = function() {
-document.getElementById('map').onclick = function(e)
-{
-	if (marks){
-	if (!e) e = window.event;
-
-	var mouseCoordsLayer = document.getElementById('mouse_coords_on_click');
-	xCoords.push(MouseCoords.getX(e));
-	yCoords.push(MouseCoords.getY(e));
-}
-}
+	document.getElementById('map').onclick = function(e)
+	{
+		if (marks){
+			if (!e) e = window.event;
+			var mouseCoordsLayer = document.getElementById('mouse_coords_on_click');
+			xCoords.push(MouseCoords.getX(e));
+			yCoords.push(MouseCoords.getY(e));
+		}
+	}
 }
 
 var VoronoiDemo = {

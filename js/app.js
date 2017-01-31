@@ -30,12 +30,11 @@ function init() {
     var multiRoute = new ymaps.multiRouter.MultiRoute({
         // Описание опорных точек мультимаршрута.
         referencePoints: [
-            [55.734876, 37.59308],
-            "Москва, ул. Мясницкая"
+        [55.734876, 37.59308],
+        "Москва, ул. Мясницкая"
         ],
         // Параметры маршрутизации.
-        params: {
-            // Ограничение на максимальное количество маршрутов, возвращаемое маршрутизатором.
+        params: { // Ограничение на максимальное количество маршрутов, возвращаемое маршрутизатором.
             results: 1
         }
     }, {
@@ -48,10 +47,10 @@ function init() {
         data: { content: "Учитывать пробки" },
         options: { selectOnClick: true, visible: false }
     }),
-        viaPointButton = new ymaps.control.Button({
-            data: { content: "Маршрут А" },
-            options: { selectOnClick: true }
-        });
+    viaPointButton = new ymaps.control.Button({
+        data: { content: "Маршрут А" },
+        options: { selectOnClick: true }
+    });
 
     // Объявляем обработчики для кнопок.
     trafficButton.events.add('select', function () {
@@ -59,13 +58,12 @@ function init() {
          * Задаем параметры маршрутизации для модели мультимаршрута.
          * @see https://api.yandex.ru/maps/doc/jsapi/2.1/ref/reference/multiRouter.MultiRouteModel.xml#setParams
          */
-        multiRoute.model.setParams({ avoidTrafficJams: true }, true);
-    });
+         multiRoute.model.setParams({ avoidTrafficJams: true }, true);
+     });
 
     trafficButton.events.add('deselect', function () {
         multiRoute.model.setParams({ avoidTrafficJams: false }, true);
     });
-
 
 
     var myMap = new ymaps.Map('map', {
@@ -73,16 +71,15 @@ function init() {
         zoom: 14,
         controls: [trafficButton, viaPointButton]
     }, {
-            buttonMaxWidth: 300
-        });
+        buttonMaxWidth: 300
+    });
     myMap.geoObjects.add(multiRoute);
 
 
     // Слушаем клик на карте.
     myMap.events.add('click', function (e) {
-        var coords = e.get('coords');
+
         myPlacemark = createPlacemark(coords, false);
-        console.log(myPlacemark);
         myMap.geoObjects.add(myPlacemark);
         // Слушаем событие окончания перетаскивания на метке.
         myPlacemark.events.add('dragend', function () {
@@ -96,6 +93,12 @@ function init() {
             myPlacemark = createPlacemark(test[i], true);
             myMap.geoObjects.add(myPlacemark);
             getAddress(myPlacemark.geometry.getCoordinates());
+
+            // ==== @TODO CONNECT TO VORONOI CANVAS ====
+
+            // voronoicreate.js - 48,49
+            // xCoords.push(10 * i); // ERROR - coordinates with canvas and dots on map doesnt match!
+            // yCoords.push(10 * i); // ERROR - coordinates with canvas and dots on map doesnt match!
         }
     });
 }
@@ -112,12 +115,11 @@ function createPlacemark(coords, load) {
         y.innerHTML = "point" + count;
         z.innerHTML = coords[0];
         w.innerHTML = coords[1];
-        return new ymaps.Placemark(coords, {
-            iconCaption: 'поиск...'
-        }, {
-                preset: 'islands#violetDotIconWithCaption',
-                draggable: true
-            });
+        return new ymaps.Placemark(
+            coords, 
+            { iconCaption: 'поиск...' }, 
+            { preset: 'islands#violetDotIconWithCaption', draggable: true }
+            );
     }
 }
 
@@ -127,10 +129,10 @@ function getAddress(coords) {
     ymaps.geocode(coords).then(function (res) {
         var firstGeoObject = res.geoObjects.get(0);
         myPlacemark.properties
-            .set({
-                iconCaption: ('p ' + count),
-                balloonContent: firstGeoObject.properties.get('text')
-            });
+        .set({
+            iconCaption: ('p ' + count),
+            balloonContent: firstGeoObject.properties.get('text')
+        });
     });
 }
 
